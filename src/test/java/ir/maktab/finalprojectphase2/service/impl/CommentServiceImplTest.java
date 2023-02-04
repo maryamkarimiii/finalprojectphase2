@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
@@ -71,7 +72,7 @@ class CommentServiceImplTest {
         Expert expert = testObject.getExpert();
         Double totalScore = expert.getTotalScore();
         Double averageOfExpertScore = commentService.averageOfExpertScore(expert);
-        assertNotEquals(totalScore, averageOfExpertScore);
+        assertEquals(totalScore, averageOfExpertScore);
     }
 
     @Test

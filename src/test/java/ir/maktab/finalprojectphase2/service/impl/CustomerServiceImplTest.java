@@ -4,6 +4,7 @@ import ir.maktab.finalprojectphase2.data.dto.ChangePasswordDTO;
 import ir.maktab.finalprojectphase2.data.enums.OrderStatus;
 import ir.maktab.finalprojectphase2.data.model.*;
 import ir.maktab.finalprojectphase2.exception.NotCorrectInputException;
+import ir.maktab.finalprojectphase2.exception.ValidationException;
 import ir.maktab.finalprojectphase2.service.*;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.*;
@@ -16,7 +17,11 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -250,6 +255,17 @@ class CustomerServiceImplTest {
                 .confirmedByCustomer(false)
                 .build();
         offerService.save(offer);
+    }
+
+    private Date convertStringToDate(String stringDate) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = format.parse(stringDate);
+        } catch (ParseException e) {
+            throw new ValidationException("the date format is not correct");
+        }
+        return date;
     }
 
 }

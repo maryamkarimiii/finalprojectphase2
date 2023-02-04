@@ -60,7 +60,7 @@ class OrderServiceImplTest {
                 .subService(subServiceService.findEnableSubServiceByName("subService1"))
                 .description("none")
                 .price(1700D)
-                .workDate(new Date())
+                .workDate(convertStringToDate("2024-01-01"))
                 .address("none")
                 .orderStatus(WAITING_FOR_OFFER)
                 .build();
@@ -101,13 +101,25 @@ class OrderServiceImplTest {
     @Order(5)
     void findAllBySubServiceAndOrderStatus() {
         List<SubService> subServiceList = List.of(testObject.getSubService());
-        List<ir.maktab.finalprojectphase2.data.model.Order> orderList = orderService.findAllBySubServiceAndOrderStatus(subServiceList);
+
+        List<ir.maktab.finalprojectphase2.data.model.Order> orderList
+                = orderService.findAllBySubServiceAndOrderStatus(subServiceList);
+
+        assertThat(orderList).isNotEmpty();
+    }
+
+    @Test
+    @Order(6)
+    void findAllOrderByCustomer() {
+        List<ir.maktab.finalprojectphase2.data.model.Order> orderList
+                = orderService.findAllByCustomer(testObject.getCustomer());
+
         assertThat(orderList).isNotEmpty();
     }
 
 
     @Test
-    @Order(6)
+    @Order(7)
     void changeStatusToStartedBeforeOfferWorkDateMustThrowException() {
         createAndSaveOffer();
         String trackingNumber = testObject.getTrackingNumber();
@@ -115,14 +127,14 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void changeStatusToStartedByUnValidOrderStatusMustThrowException() {
         String trackingNumber = testObject.getTrackingNumber();
         assertThrows(ValidationException.class, () -> orderService.changeStatusToStarted(trackingNumber));
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void changeOrderStatusToWaitingForCustomerChose() {
         ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber(testObject.getTrackingNumber());
         order.setOrderStatus(WAITING_FOR_CUSTOMER_CHOICE);
@@ -133,7 +145,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void updateOrderAfterOfferConfirmed() {
         createAndSaveOffer();
         ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber(testObject.getTrackingNumber());
@@ -147,7 +159,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     void findAllBySubServiceAndOrderStatusWhenOrderStatusIsNotWaitingForRecommendAndWaitingForCustomerChoseMustBeEmpty() {
         List<SubService> subServiceList = List.of(testObject.getSubService());
         List<ir.maktab.finalprojectphase2.data.model.Order> orderList = orderService.findAllBySubServiceAndOrderStatus(subServiceList);
@@ -155,14 +167,14 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void changeStatusToFinishBeforeStartedStatusMustThrowException() {
         String trackingNumber = testObject.getTrackingNumber();
         assertThrows(ValidationException.class, () -> orderService.changeStatusToFinished(trackingNumber));
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     void changeStatusToStarted() {
         changeOfferDate();
         orderService.changeStatusToStarted(testObject.getTrackingNumber());
@@ -171,7 +183,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     void changeStatusToFinished() {
         orderService.changeStatusToFinished(testObject.getTrackingNumber());
         ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber(testObject.getTrackingNumber());
@@ -179,7 +191,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    @Order(14)
+    @Order(15)
     void softDeleteOrder() {
         ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber(testObject.getTrackingNumber());
         orderService.softDelete(order);

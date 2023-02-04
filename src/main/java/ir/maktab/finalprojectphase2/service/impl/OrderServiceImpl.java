@@ -2,14 +2,12 @@ package ir.maktab.finalprojectphase2.service.impl;
 
 import ir.maktab.finalprojectphase2.data.dao.OrderDao;
 import ir.maktab.finalprojectphase2.data.enums.OrderStatus;
-import ir.maktab.finalprojectphase2.data.model.Expert;
-import ir.maktab.finalprojectphase2.data.model.Offer;
-import ir.maktab.finalprojectphase2.data.model.Order;
-import ir.maktab.finalprojectphase2.data.model.SubService;
+import ir.maktab.finalprojectphase2.data.model.*;
 import ir.maktab.finalprojectphase2.exception.NotFoundException;
 import ir.maktab.finalprojectphase2.exception.ValidationException;
 import ir.maktab.finalprojectphase2.service.OfferService;
 import ir.maktab.finalprojectphase2.service.OrderService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
 
@@ -83,6 +82,11 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.WAITING_FOR_COMING);
         order.setExpert(expert);
         orderDao.save(order);
+    }
+
+    @Override
+    public List<Order> findAllByCustomer(Customer customer) {
+        return orderDao.findAllByCustomer(customer);
     }
 
     @Override

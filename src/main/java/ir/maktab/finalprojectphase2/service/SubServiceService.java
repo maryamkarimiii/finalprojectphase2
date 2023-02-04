@@ -1,6 +1,7 @@
 package ir.maktab.finalprojectphase2.service;
 
 
+import ir.maktab.finalprojectphase2.data.model.Expert;
 import ir.maktab.finalprojectphase2.data.model.Service;
 import ir.maktab.finalprojectphase2.data.model.SubService;
 
@@ -17,6 +18,8 @@ public interface SubServiceService extends BaseService<SubService> {
     Map<Service, List<SubService>> findAllEnableSubService();
 
     Map<Service, List<SubService>> findAllDisableSubService();
+
+    List<Expert> findSubServiceExpertsBySubServiceName(String subServiceName);
 
     boolean isExist(String subServiceName);
 

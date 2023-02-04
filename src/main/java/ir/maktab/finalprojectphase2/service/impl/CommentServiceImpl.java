@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentDao commentDao;
+    private final ExpertService expertService;
 
     @Override
     public void save(Comment comment) {
         commentDao.save(comment);
+        expertService.calculateAndUpdateExpertScore(comment.getExpert());
     }
 
     @Override

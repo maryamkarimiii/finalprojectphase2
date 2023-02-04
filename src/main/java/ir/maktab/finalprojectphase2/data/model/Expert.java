@@ -23,11 +23,11 @@ public class Expert extends User {
     @Column(nullable = false)
     ExpertRegistrationStatus expertRegistrationStatus;
 
-    @Column(length = 10000)
+    @Lob
     String image;
 
     Double totalScore;
-    @ManyToMany
+    @ManyToMany(mappedBy = "expertSet")
     @ToString.Exclude
     Set<SubService> subServiceSet;
 

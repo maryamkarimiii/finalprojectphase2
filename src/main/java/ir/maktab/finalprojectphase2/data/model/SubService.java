@@ -32,7 +32,7 @@ public class SubService {
     Service service;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "subServiceSet")
+    @ManyToMany()
     Set<Expert> expertSet;
 
     @Column(columnDefinition = "boolean default false")

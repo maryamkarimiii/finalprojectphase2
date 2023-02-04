@@ -61,7 +61,7 @@ class OfferServiceImplTest {
         testObject = Offer.builder()
                 .offerId(offerId)
                 .price(1700D)
-                .workDate(new Date())
+                .workDate(convertStringToDate("2024-01-01"))
                 .duration(Duration.ofHours(2))
                 .confirmedByCustomer(false)
                 .build();
@@ -92,6 +92,13 @@ class OfferServiceImplTest {
 
     @Test
     @Order(4)
+    void isExistByOfferId() {
+        boolean exist = offerService.isExistByOfferId(testObject.getOfferId());
+        assertTrue(exist);
+    }
+
+    @Test
+    @Order(5)
     void findOfferByOfferId() {
         Offer offer = offerService.findById(offerId);
         System.out.println(offer);
@@ -101,7 +108,7 @@ class OfferServiceImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"workDate", "duration"})
-    @Order(5)
+    @Order(6)
     void findAllByOrderWithUnValidSortPropertiesMustThrowException(String properties) {
         assertThrows(ValidationException.class,
                 () -> offerService.findAllByOrder(order, properties, Sort.Direction.ASC));
@@ -109,27 +116,27 @@ class OfferServiceImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"offerId.expert.totalScore", "price"})
-    @Order(6)
+    @Order(7)
     void findAllByOrder(String properties) {
         List<Offer> offerList = offerService.findAllByOrder(order, properties, Sort.Direction.ASC);
         assertThat(offerList).isNotEmpty();
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void isExistByOrder() {
         boolean exist = offerService.isExistByOrder(order);
         assertTrue(exist);
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void findOfferByOrderBeforeConfirmOfferMustThrowNotFoundException() {
         assertThrows(NotFoundException.class, () -> offerService.findByOrderAndConfirmed(order));
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void confirmOffer() {
         offerService.updateOfferAfterConfirmed(testObject);
         Offer offer = offerService.findByOrderAndConfirmed(order);
@@ -137,7 +144,7 @@ class OfferServiceImplTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     void findOfferAfterConfirmByOrder() {
         Offer offer = offerService.findByOrderAndConfirmed(order);
         assertThat(offer).isNotNull();

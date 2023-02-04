@@ -9,7 +9,11 @@ import ir.maktab.finalprojectphase2.data.model.SubService;
 import java.util.List;
 import java.util.Map;
 
-public interface AdminService extends BaseService<Admin> {
+public interface AdminService {
+    void save(Admin admin);
+
+    boolean isExistByUsername(String username);
+
     void addExpertToSubService(String expertUsername, String subServiceName);
 
     void deleteExpertFromSubService(String expertUsername, String subServiceName);
@@ -24,11 +28,19 @@ public interface AdminService extends BaseService<Admin> {
 
     Map<Service, List<SubService>> seeALLDisableSubService();
 
+    List<Service> seeAllDisableService();
+
+    SubService findDisableSubServiceByName(String subServiceName);
+
+    void activeDisableService(String serviceName);
+
     List<Expert> seeAllExpertWithNewExpertRegistrationStatus();
 
     void deleteExistenceService(Service service);
 
     void deleteExistenceSubService(SubService subService);
+
+    Service findDisableServiceByName(String serviceName);
 
     void confirmExpert(String expertUsername);
 
@@ -37,6 +49,4 @@ public interface AdminService extends BaseService<Admin> {
     void updateSubServicePrice(String subServiceName, double newPrice);
 
     void updateSubServiceDescription(String subServiceName, String newDescription);
-
-    void softDelete(Admin admin);
 }

@@ -15,6 +15,7 @@ import ir.maktab.finalprojectphase2.service.ExpertService;
 import ir.maktab.finalprojectphase2.service.ServiceService;
 import ir.maktab.finalprojectphase2.service.SubServiceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
         return serviceService.findAllEnableService();
     }
 
+    @Override
     public List<Service> seeAllDisableService() {
         return serviceService.findAllDisableService();
     }
@@ -60,10 +62,12 @@ public class AdminServiceImpl implements AdminService {
         return subServiceService.findAllDisableSubService();
     }
 
+    @Override
     public Service findDisableServiceByName(String serviceName) {
         return serviceService.findDisableServiceByName(serviceName);
     }
 
+    @Override
     public SubService findDisableSubServiceByName(String subServiceName) {
         return subServiceService.findDisableSubServiceByName(subServiceName);
     }
@@ -99,24 +103,31 @@ public class AdminServiceImpl implements AdminService {
         subServiceService.activeDisableSubService(subServiceName);
     }
 
-
+    @Override
     public void activeDisableService(String serviceName) {
         serviceService.activeDisableService(serviceName);
     }
 
     @Override
+    public boolean isExistByUsername(String username) {
+        return adminDao.existsByUsername(username);
+    }
+
+    @Override
+    @Transactional
     public void addExpertToSubService(String expertUsername, String subServiceName) {
         if (!expertService.isExist(expertUsername))
             throw new NotFoundException("the expert dose not exist");
         if (!subServiceService.isExist(subServiceName))
             throw new NotFoundException("the subService dose not exist");
-        Expert expert = expertService.findDeActiveExpertByUsername(expertUsername);
+        Expert expert = expertService.findActiveExpertByUsername(expertUsername);
         SubService subService = subServiceService.findEnableSubServiceByName(subServiceName);
         subService.getExpertSet().add(expert);
         subServiceService.update(subService);
     }
 
     @Override
+    @Transactional
     public void deleteExpertFromSubService(String expertUsername, String subServiceName) {
         if (!subServiceService.isExist(subServiceName))
             throw new NotFoundException("the subService dose not exist");
@@ -139,20 +150,8 @@ public class AdminServiceImpl implements AdminService {
         subServiceService.updateSubServiceDescription(subServiceName, newDescription);
     }
 
-    @Override
     public void save(Admin admin) {
-        admin.setRole(Role.Admin);
-        adminDao.save(admin);
-    }
-
-    @Override
-    public void update(Admin admin) {
-        adminDao.save(admin);
-    }
-
-    @Override
-    public void softDelete(Admin admin) {
-        admin.setDisable(true);
+        admin.setRole(Role.ADMIN);
         adminDao.save(admin);
     }
 }

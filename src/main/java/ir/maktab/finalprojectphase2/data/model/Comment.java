@@ -1,9 +1,8 @@
 package ir.maktab.finalprojectphase2.data.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import jakarta.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

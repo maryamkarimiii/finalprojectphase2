@@ -9,6 +9,8 @@ import ir.maktab.finalprojectphase2.exception.ValidationException;
 import ir.maktab.finalprojectphase2.service.OfferService;
 import ir.maktab.finalprojectphase2.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +21,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfferServiceImpl implements OfferService {
     private final OfferDao offerDao;
-   // private final OrderService orderService;
+    @Lazy
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public void save(Offer offer) {
-//        if (!isExistByOrder(offer.getOfferId().getOrder()))
-//            orderService.changeStatusToWaitingForCustomerChose(offer.getOfferId().getOrder());
-
         validateOfferWorkDate(offer);
         validateOfferPrice(offer);
         offerDao.save(offer);
+        if (!isExistByOrder(offer.getOfferId().getOrder()))
+            orderService.changeStatusToWaitingForCustomerChose(offer.getOfferId().getOrder());
     }
 
     @Override
@@ -49,6 +52,7 @@ public class OfferServiceImpl implements OfferService {
         return offerDao.findByOfferId_OrderAndConfirmedByCustomerTrue(order)
                 .orElseThrow(() -> new NotFoundException("the offer by this order dose not exist"));
     }
+
     @Override
     public Offer findById(OfferId id) {
         return offerDao.findById(id).orElseThrow(() -> new NotFoundException("the offer dose not exist"));

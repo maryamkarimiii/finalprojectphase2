@@ -12,6 +12,3 @@ insert into expert (email, first_name, last_name, password, phone_number, role, 
 values ('maryam12@gmail.com', 'maryam', 'karimi', '123456Mk', '09100321487', 'EXPERT', 'maryam12@gmail.com',
         'CONFIRMED',
         1.5);
-
--- insert into offer (work_date, price)
--- values (CAST('12/08/2023' as date), 1300.0);

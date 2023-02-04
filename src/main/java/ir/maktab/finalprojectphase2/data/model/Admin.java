@@ -1,16 +1,18 @@
 package ir.maktab.finalprojectphase2.data.model;
 
 import ir.maktab.finalprojectphase2.data.enums.Role;
-import jakarta.persistence.Entity;
-import lombok.AccessLevel;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import jakarta.persistence.*;
-
-@Entity
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
+@Entity
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

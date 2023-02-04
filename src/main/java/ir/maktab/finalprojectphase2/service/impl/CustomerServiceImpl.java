@@ -9,10 +9,12 @@ import ir.maktab.finalprojectphase2.exception.NotFoundException;
 import ir.maktab.finalprojectphase2.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Transactional
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
@@ -102,5 +104,11 @@ public class CustomerServiceImpl implements CustomerService {
         Offer offer = offerService.findById(offerId);
         offerService.updateOfferAfterConfirmed(offer);
         orderService.updateOrderAfterOfferConfirmed(offer.getOfferId().getOrder(), offer.getOfferId().getExpert());
+    }
+
+    @Override
+    public List<Order> findAllCustomerOrder(String userName) {
+        Customer customer = findByUsername(userName);
+        return orderService.findAllByCustomer(customer);
     }
 }

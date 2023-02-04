@@ -29,4 +29,6 @@ public interface CustomerService extends BaseService<Customer> {
     void changeOrderStatusTOFinishedByCustomer(String orderTrackingNumber);
 
     void confirmOffer(OfferId offerId);
+
+    List<Order> findAllCustomerOrder(String userName);
 }

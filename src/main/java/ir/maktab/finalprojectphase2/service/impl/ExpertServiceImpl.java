@@ -5,7 +5,6 @@ import ir.maktab.finalprojectphase2.data.dto.ChangePasswordDTO;
 import ir.maktab.finalprojectphase2.data.enums.ExpertRegistrationStatus;
 import ir.maktab.finalprojectphase2.data.enums.Role;
 import ir.maktab.finalprojectphase2.data.model.*;
-import ir.maktab.finalprojectphase2.exception.EmptyCollectionException;
 import ir.maktab.finalprojectphase2.exception.NotCorrectInputException;
 import ir.maktab.finalprojectphase2.exception.NotFoundException;
 import ir.maktab.finalprojectphase2.exception.ValidationException;
@@ -14,11 +13,12 @@ import ir.maktab.finalprojectphase2.service.ExpertService;
 import ir.maktab.finalprojectphase2.service.OfferService;
 import ir.maktab.finalprojectphase2.service.OrderService;
 import ir.maktab.finalprojectphase2.validation.ImageValidator;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
-import org.springframework.context.ApplicationListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,11 +29,13 @@ import java.util.Set;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ExpertServiceImpl implements ExpertService{
+public class ExpertServiceImpl implements ExpertService {
     private final ExpertDao expertDao;
     private final OrderService orderService;
     private final OfferService offerService;
-    private final CommentService commentService;
+    @Lazy
+    @Autowired()
+    private CommentService commentService;
 
     @Override
     public void save(Expert expert) {

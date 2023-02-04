@@ -22,7 +22,7 @@ public interface ExpertService extends BaseService<Expert> {
 
     void getExpertImage(String username, String destinationFile) throws IOException;
 
-    void changePassword(ChangePasswordDTO changePasswordDTO,String username);
+    void changePassword(ChangePasswordDTO changePasswordDTO, String username);
 
     void calculateAndUpdateExpertScore(Expert expert);
 

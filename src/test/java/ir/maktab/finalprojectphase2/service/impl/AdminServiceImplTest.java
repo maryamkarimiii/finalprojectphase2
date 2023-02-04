@@ -55,7 +55,7 @@ class AdminServiceImplTest {
                 .fullName("maryam")
                 .username("maryam@gmail.com")
                 .password("12345Mm")
-                .role(Role.Admin)
+                .role(Role.ADMIN)
                 .build();
     }
 
