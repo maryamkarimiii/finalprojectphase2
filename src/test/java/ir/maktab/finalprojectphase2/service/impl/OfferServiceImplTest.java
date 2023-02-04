@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +62,7 @@ class OfferServiceImplTest {
         testObject = Offer.builder()
                 .offerId(offerId)
                 .price(1700D)
-                .workDate(convertStringToDate("2024-01-01"))
+                .workDate(LocalDate.now())
                 .duration(Duration.ofHours(2))
                 .confirmedByCustomer(false)
                 .build();
@@ -78,7 +79,7 @@ class OfferServiceImplTest {
     @Test
     @Order(2)
     void saveOfferByUnValidWorkDateMustThrowException() {
-        testObject.setWorkDate(convertStringToDate("2023-01-01"));
+        testObject.setWorkDate(LocalDate.of(2023, 1, 1));
         assertThrows(ValidationException.class, () -> offerService.save(testObject));
     }
 

@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -24,13 +25,13 @@ public class Offer {
     @Column(updatable = false)
     @Temporal(TemporalType.DATE)
     @CreationTimestamp
-    Date createDate;
+    LocalDate createDate;
 
     @Column(nullable = false)
     Double price;
 
     @Temporal(TemporalType.DATE)
-    Date workDate;
+    LocalDate workDate;
 
     Duration duration;
 

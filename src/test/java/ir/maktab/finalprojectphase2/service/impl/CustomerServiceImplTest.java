@@ -235,7 +235,7 @@ class CustomerServiceImplTest {
                 .subService(subServiceService.findEnableSubServiceByName("subService1"))
                 .description("none")
                 .price(1700D)
-                .workDate(new Date())
+                .workDate(LocalDate.now())
                 .address("none")
                 .orderStatus(WAITING_FOR_OFFER)
                 .build();
@@ -250,7 +250,7 @@ class CustomerServiceImplTest {
         Offer offer = Offer.builder()
                 .offerId(offerId)
                 .price(1700D)
-                .workDate(new Date())
+                .workDate(LocalDate.now())
                 .duration(Duration.ofHours(2))
                 .confirmedByCustomer(false)
                 .build();

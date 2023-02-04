@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +61,7 @@ class OrderServiceImplTest {
                 .subService(subServiceService.findEnableSubServiceByName("subService1"))
                 .description("none")
                 .price(1700D)
-                .workDate(convertStringToDate("2024-01-01"))
+                .workDate(LocalDate.now())
                 .address("none")
                 .orderStatus(WAITING_FOR_OFFER)
                 .build();
@@ -77,7 +78,7 @@ class OrderServiceImplTest {
     @Test
     @Order(2)
     void saveOrderByUnValidWorkDateMustThrowException() {
-        testObject.setWorkDate(convertStringToDate("2023-01-01"));
+        testObject.setWorkDate(LocalDate.of(2023, 1, 1));
         assertThrows(ValidationException.class, () -> orderService.save(testObject));
     }
 
@@ -217,7 +218,7 @@ class OrderServiceImplTest {
         Offer offer = Offer.builder()
                 .offerId(offerId)
                 .price(1300D)
-                .workDate(convertStringToDate("2023-08-12"))
+                .workDate(LocalDate.now())
                 .duration(Duration.ofHours(2))
                 .confirmedByCustomer(true)
                 .build();
@@ -227,7 +228,7 @@ class OrderServiceImplTest {
     private void changeOfferDate() {
         ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber(testObject.getTrackingNumber());
         Offer offer = offerService.findByOrderAndConfirmed(order);
-        offer.setWorkDate(new Date());
+        offer.setWorkDate(LocalDate.now());
         offerService.update(offer);
     }
 

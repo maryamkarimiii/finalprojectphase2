@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     public void validateOfferWorkDate(Offer offer) {
-        if (offer.getWorkDate().before(new Date()))
+        if (offer.getWorkDate().isBefore(LocalDate.now()))
             throw new ValidationException("the offered date cant be before: " + new Date());
     }
 }

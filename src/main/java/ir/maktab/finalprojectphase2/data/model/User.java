@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -39,7 +40,7 @@ public abstract class User {
     @Column(updatable = false)
     @Temporal(TemporalType.DATE)
     @CreationTimestamp
-    Date registrationDate;
+    LocalDate registrationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     Wallet wallet;

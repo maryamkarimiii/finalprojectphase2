@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     private void validateOrderDate(Order order) {
-        if (order.getWorkDate().before(new Date()))
+        if (order.getWorkDate().isBefore(LocalDate.now()))
             throw new ValidationException(String.format("the date cant be before %tc", new Date()));
     }
 
@@ -114,8 +115,8 @@ public class OrderServiceImpl implements OrderService {
             throw new ValidationException("you cant change status to coming before confirmed on offer");
 
         Offer offer = offerService.findByOrderAndConfirmed(order);
-        Date offerDate = offer.getWorkDate();
-        if (offerDate.after(new Date()))
+        LocalDate offerDate = offer.getWorkDate();
+        if (offerDate.isAfter(LocalDate.now()))
             throw new ValidationException
                     (String.format("you cant change order status to startWork before %tc that expert offered", offerDate));
     }

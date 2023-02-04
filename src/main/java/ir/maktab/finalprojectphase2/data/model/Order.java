@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -36,7 +37,7 @@ public class Order {
 
     @Temporal(TemporalType.DATE)
     @CreationTimestamp
-    Date orderDate;
+    LocalDate orderDate;
 
     @Column(nullable = false)
     String description;
@@ -46,7 +47,7 @@ public class Order {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    Date workDate;
+    LocalDate workDate;
 
     @Column(nullable = false)
     String address;
