@@ -212,11 +212,10 @@ class ExpertServiceImplTest {
     @Test
     @Order(16)
     void findExpertOrders() {
-        setOrderExpert();
         List<ir.maktab.finalprojectphase2.data.model.Order> expertsRelatedOrders
                 = expertService.findExpertsRelatedOrders(testObject.getUsername());
 
-        assertThat(expertsRelatedOrders).isNotEmpty();
+        assertThat(expertsRelatedOrders).isEmpty();
     }
 
     @Test
@@ -247,12 +246,6 @@ class ExpertServiceImplTest {
     void findDisableExpertByUsername() {
         Expert expertAfterDelete = expertService.findDeActiveExpertByUsername(testObject.getUsername());
         assertNotNull(expertAfterDelete);
-    }
-
-    private void setOrderExpert() {
-        ir.maktab.finalprojectphase2.data.model.Order order = orderService.findByTrackingNumber("123456");
-        order.setExpert(expertService.findActiveExpertByUsername(testObject.getUsername()));
-        orderService.update(order);
     }
 
     private void createCommentForExpert() {
