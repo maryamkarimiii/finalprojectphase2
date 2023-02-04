@@ -151,15 +151,4 @@ class OfferServiceImplTest {
         assertThat(offer).isNotNull();
     }
 
-    private Date convertStringToDate(String stringDate) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date;
-        try {
-            date = format.parse(stringDate);
-        } catch (ParseException e) {
-            throw new ValidationException("the date format is not correct");
-        }
-        return date;
-    }
-
 }
