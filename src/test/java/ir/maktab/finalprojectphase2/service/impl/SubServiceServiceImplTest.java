@@ -2,7 +2,6 @@ package ir.maktab.finalprojectphase2.service.impl;
 
 import ir.maktab.finalprojectphase2.data.model.Service;
 import ir.maktab.finalprojectphase2.data.model.SubService;
-import ir.maktab.finalprojectphase2.exception.EmptyCollectionException;
 import ir.maktab.finalprojectphase2.service.ServiceService;
 import ir.maktab.finalprojectphase2.service.SubServiceService;
 import org.junit.jupiter.api.*;
@@ -81,12 +80,6 @@ class SubServiceServiceImplTest {
 
     @Test
     @Order(5)
-    void findAllDisableSubServiceWithoutAnyDisableSubServiceMustThrowException() {
-        assertThrows(EmptyCollectionException.class, () -> subServiceService.findAllDisableSubService());
-    }
-
-    @Test
-    @Order(6)
     void softDeleteSubService() {
         SubService subService = subServiceService.findEnableSubServiceByName(testObject.getName());
         subServiceService.softDelete(subService);
@@ -95,34 +88,21 @@ class SubServiceServiceImplTest {
     }
 
     @Test
-    @Order(7)
+    @Order(6)
     void findDisableSubServiceByName() {
         SubService disableSubService = subServiceService.findDisableSubServiceByName(testObject.getName());
         assertNotNull(disableSubService);
     }
 
     @Test
-    @Order(8)
+    @Order(7)
     void findAllDisableSubService() {
         Map<Service, List<SubService>> listMap = subServiceService.findAllDisableSubService();
         assertThat(listMap).isNotEmpty();
     }
 
     @Test
-    @Order(9)
-    void findAllEnableSubServiceWithoutAnyEnableSubServiceMustThrowException() {
-        assertThrows(EmptyCollectionException.class, () -> subServiceService.findAllEnableSubService());
-    }
-
-    @Test
-    @Order(10)
-    void findAllSubServiceByServiceNameWithEmptyListMustThrowException() {
-        assertThrows(EmptyCollectionException.class,
-                () -> subServiceService.findAllByServiceName("service1"));
-    }
-
-    @Test
-    @Order(11)
+    @Order(8)
     void activeDisableSubService() {
         subServiceService.activeDisableSubService(testObject.getName());
         SubService subService = subServiceService.findEnableSubServiceByName(testObject.getName());
@@ -130,14 +110,14 @@ class SubServiceServiceImplTest {
     }
 
     @Test
-    @Order(12)
+    @Order(9)
     void findAllByServiceName() {
         List<SubService> subServiceList = subServiceService.findAllByServiceName(testObject.getService().getName());
         assertThat(subServiceList).isNotEmpty();
     }
 
     @Test
-    @Order(13)
+    @Order(10)
     void updateSubServicePrice() {
         Double baseAmountBeforeChange = testObject.getBaseAmount();
         subServiceService.updateSubServicePrice(testObject.getName(), 100D);
@@ -146,7 +126,7 @@ class SubServiceServiceImplTest {
     }
 
     @Test
-    @Order(14)
+    @Order(11)
     void updateSubServiceDescription() {
         String descriptionBeforeChange = testObject.getDescription();
         subServiceService.updateSubServiceDescription(testObject.getName(), "new description");

@@ -74,9 +74,9 @@ class ExpertServiceImplTest {
     @Test
     @Order(2)
     void setExpertImage() throws IOException {
+        String filePath = "D:\\intllij\\finalprojectphase2\\src\\test\\resources\\staticImage\\water-drop-300KB-2.jpg";
         Expert expertWithNullImage = expertService.findActiveExpertByUsername(testObject.getUsername());
-        expertService.setExpertImage(expertWithNullImage
-                , "D:\\intllij\\finalprojectphase2\\src\\test\\resources\\water-drop-300KB-2.jpg");
+        expertService.setExpertImage(expertWithNullImage, filePath);
 
         Expert expertAfterSetImage = expertService.findActiveExpertByUsername(testObject.getUsername());
         assertThat(expertAfterSetImage.getImage()).isNotNull();
@@ -85,9 +85,9 @@ class ExpertServiceImplTest {
     @Test
     @Order(3)
     void getExpertImage() throws IOException {
-        expertService.getExpertImage(testObject.getUsername()
-                , "D:\\intllij\\finalprojectphase2\\src\\test\\resources\\1.jpg");
-        Path path = Path.of("D:\\intllij\\finalprojectphase2\\src\\test\\resources\\1.jpg");
+        String filePath = "D:\\intllij\\finalprojectphase2\\src\\test\\resources\\staticImage\\1.jpg";
+        expertService.getExpertImage(testObject.getUsername(), filePath);
+        Path path = Path.of(filePath);
         boolean exists = Files.exists(path);
         assertTrue(exists);
     }
